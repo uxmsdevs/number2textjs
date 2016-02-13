@@ -1,0 +1,82 @@
+@font-face {
+    font-family: "notosans-regular";
+    src: url(../fonts/notosans-regular.ttf);
+}
+body {
+    margin: 0px;
+    padding: 20px;
+    background-color: #EBEBEB;
+    font-family: 'notosans-regular' !important;
+}
+table {
+    width: 100%;
+}
+.tbltd {
+    border: 1px solid green;
+}
+textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 75%;
+}
+.nav-header {
+    font-size: 16px;
+    text-transform: none;
+}
+.icon {
+    font-size: 16px;
+}
+.tab-pane {
+    min-height: 400px;
+}
+.nav-tabs li a {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 12px;
+}
+.nav-list > li > a {
+    word-wrap: break-word !important;
+}
+
+.btn {
+    margin-bottom: 10px;
+}
+@media (max-width: 767px) {
+    .numeric {
+        width: 100% !important;
+        font-family: 'notosans-regular' !important;
+    }
+    .nav-list {
+        padding-left: 0px !important;
+    }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+    .numeric {
+        width: 75% !important;
+        font-family: 'notosans-regular' !important;
+    }
+}
+@media (min-width: 1024px) {
+    .numeric {
+        width: 50% !important;
+        font-family: 'notosans-regular' !important;
+    }
+}
+
+input, button, select, textarea {
+    font-family: 'notosans-regular' !important;
+}
+
+.border-red {border: 1px solid red;}
+.border-green {border: 1px solid green;}
+
+.redC {color: #ff0000;}
+.green {font-color: green;}
+
+.w25 {width: 25%;}
+.w75 {width: 75%;}
+
+.icons {font-size: 22px; color: #999999;}
+.f16 {font-size: 16px;}
+.f13 {font-size: 13px;}
