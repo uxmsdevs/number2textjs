@@ -12,4 +12,5 @@ var results = Number2TextJS( NUMBER_TO_CONVERT );
 
     results.textual => returns textual converts (with negativity)
 
-### Sample Page
+### Project Sample Page
+    https://uxms.github.io/number2textjs/
