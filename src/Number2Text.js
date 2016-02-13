@@ -4,24 +4,22 @@
 /*!
  * Verilen bir sayiyinin turkce olarak metinsel okunusunu verir
  */
-function Number2TextJS (inputId, textArea) {
-    originalNumber = document.getElementById(inputId).value;
-    area = document.getElementById(textArea);
-
-    reFormedNumber = originalNumber;
-    steps = [];
-    newNumber = [];
+function Number2TextJS (originalNumber) {
+    var reFormedNumber = originalNumber;
+    var steps = [];
+    var newNumber = [];
 
     if (originalNumber.length > 450) {
-        area.innerHTML = "Maximum 450 digits accepted..";
-        return false;
+        return {
+            error: "Maximum 450 digits accepted.."
+        };
     }
 
-    numberLength = reFormedNumber.length;
+    var numberLength = reFormedNumber.length;
 
-    unitsDigits = ["", "bir", "iki", "üç", "dört", "beş", "altı", "yedi", "sekiz", "dokuz"];
-    tensDigits = ["", "on", "yirmi", "otuz", "kırk", "elli", "altmış", "yetmiş", "seksen", "doksan"];
-    biggerDigits = ["", "yüz", "bin", "milyon", "milyar", "trilyon", "katrilyon", "kentilyon", "seksilyon", "septilyon",
+    var unitsDigits = ["", "bir", "iki", "üç", "dört", "beş", "altı", "yedi", "sekiz", "dokuz"];
+    var tensDigits = ["", "on", "yirmi", "otuz", "kırk", "elli", "altmış", "yetmiş", "seksen", "doksan"];
+    var biggerDigits = ["", "yüz", "bin", "milyon", "milyar", "trilyon", "katrilyon", "kentilyon", "seksilyon", "septilyon",
         "oktilyon", "nonilyon", "desilyon", "undesilyon", "dodesilyon", "tredesilyon", "kattuordesilyon", "kendesilyon",
         "sexdesilyon", "septendesilyon", "oktodesilyon", "novemdesilyon", "vigintilyon", "unvigintilyon", "dovigintilyon",
         "trevigintilyon", "kattuorvigintilyon", "kenvigintilyon", "sexvigintilyon", "septenvigintilyon", "oktovigintilyon",
@@ -52,9 +50,9 @@ function Number2TextJS (inputId, textArea) {
     ];
 
     if (numberLength % 3 == 0) {
-        basamak_sayisi = parseInt(numberLength / 3);
+        var stepCount = parseInt(numberLength / 3);
     } else {
-        basamak_sayisi = parseInt(numberLength / 3 + 1);
+        var stepCount = parseInt(numberLength / 3 + 1);
     }
 
 
@@ -65,18 +63,18 @@ function Number2TextJS (inputId, textArea) {
     };
 
 
-    for (var i = 0, j = 1; i < basamak_sayisi; i++) {
+    for (var i = 0, j = 1; i < stepCount; i++) {
         steps[i] = reFormedNumber.substr(j - 1, 3);
         j = j + 3;
     };
 
-    negatif = "";
+    var negative = "";
     if (originalNumber.charAt(0) == "-") {
-        negatif = "Eksi ";
+        negative = "Eksi ";
     };
 
 
-    for (var i = 0, j = basamak_sayisi; i < j; i++){
+    for (var i = 0, j = stepCount; i < j; i++){
         if (steps[i][0] > 0 ) {
             newNumber += (steps[i][0] > 1 ? unitsDigits[steps[i][0]]+'' : '')+biggerDigits[1]+" ";
         };
@@ -85,29 +83,20 @@ function Number2TextJS (inputId, textArea) {
             newNumber += tensDigits[steps[i][1]]+" ";
         };
 
-        if (steps[i][2] > 0 && !(basamak_sayisi == 2 && steps[i][0] == 0 && steps[i][1] == 0 && steps[i][2] == 1)) {
+        if (steps[i][2] > 0 && !(stepCount == 2 && steps[i][0] == 0 && steps[i][1] == 0 && steps[i][2] == 1)) {
             newNumber += unitsDigits[steps[i][2]]+" ";
         };
 
-        if(basamak_sayisi > 1 && (steps[i][0] > 0 || steps[i][1] > 0 || steps[i][2] > 0) ) {
-            newNumber += biggerDigits[basamak_sayisi]+" ";
+        if(stepCount > 1 && (steps[i][0] > 0 || steps[i][1] > 0 || steps[i][2] > 0) ) {
+            newNumber += biggerDigits[stepCount]+" ";
         };
 
-        --basamak_sayisi;
+        --stepCount;
     };
 
-    document.getElementById(textArea).setAttribute("style", "display: normal");
-
-    area.innerHTML = '\
-        <i class="icons fa fa-angle-double-right"></i> GİRİLEN SAYI <a> <i class="redC">('+originalNumber.length()+' harf)</i> '+originalNumber+'</a> \
-        <br> \
-        <i class="icons fa fa-angle-double-right"></i> SAYININ OKUNUŞU <a>'+negatif+newNumber+'</a> \
-        <br> \
-        <i class="icons fa fa-strikethrough"></i> SESLİ OKUNUŞU <i class="redC">(Sesli okuma için internet gereklidir)</i> \
-        <a onclick="document.getElementById(\'oku\').play();">\
-            <audio id="oku" src="_tts.php?lang=tr&amp;tts='+negatif+newNumber+'"></audio>\
-            <img title="'+negatif+newNumber+' okunuşunu dinle.." alt="'+negatif+newNumber+' okunuşunu dinle.." class="el" src="assets/img/play.png" />\
-        </a> \
-        <hr class="divider" />\
-    ';
+    return {
+        original: originalNumber,
+        digits: originalNumber.length,
+        textual: negative+newNumber
+    };
 }
